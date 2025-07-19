@@ -1,16 +1,32 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..', '..'))
+from dotenv import load_dotenv
 from model import llm
 from crewai import Agent
+from tool.webSearch_tool import TavilySearchTool
+load_dotenv()
+
+search_tool = TavilySearchTool()
+
 
 
 JobScout = Agent(
-    role="Senior Recruitment Scout",
-    goal="To discover and compile a list of URLs pointing to relevant job listings based on a given job role and location",
+    role='Job Search Aggregator Scout',
+    goal='Find URLs for job search result pages on major job boards for various tech roles across major Indian cities.',
     backstory=(
-        """You are an expert web researcher with a knack for using advanced search 
-        operators to uncover job opportunities on major job boards, niche industry sites, 
-        and company career pages. You are relentless in your pursuit of leads and filter out irrelevant search results"""
+        "An expert web researcher who finds the main entry points for job searches "
+        "on major platforms. You are given a list of roles and cities and must find "
+        "search pages that cover these criteria."
     ),
-    verbose=2,
-    tools=[],
+    tools=[search_tool],
+    verbose=True,
+    allow_delegation=False,
     llm=llm
 )
+
+if __name__ == "__main__":
+    if search_tool:
+        print("OK")
+    else:
+        print("Cooked")

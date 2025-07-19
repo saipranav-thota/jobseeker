@@ -1,5 +1,9 @@
 from model import llm
 from crewai import Agent
+from dotenv import load_dotenv
+
+load_dotenv()
+
 
 
 investigator = Agent(
@@ -11,7 +15,7 @@ investigator = Agent(
             and precisely pull out the specific pieces of information you've been tasked 
             to find, no matter how deeply they are buried in the code"""
     ),
-    verbose=2,
+    verbose=True,
     tools=[],
     llm=llm
 )

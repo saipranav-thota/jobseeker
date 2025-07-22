@@ -3,10 +3,16 @@ from crewai import Crew, Task, Process
 from agent.JobScout_agent import JobScout
 from task.JobScout_task import JobScout_task
 from agent.investigator_agent import investigator
+import logging
 import time
 from dotenv import load_dotenv
+from utils.parser import parse_to_json
+from utils.mongo import load_data, get_data, update_data
+
 
 load_dotenv()
+logging.basicConfig(level=logging.INFO)
+
 
 print("GEMINI_API_KEY: ", os.getenv("GEMINI_API_KEY"))
 
@@ -45,7 +51,7 @@ if __name__ == "__main__":
         )
 
         results_crew_output = job_crew.kickoff()
-        print(results_crew_output)
+        load_data(parse_to_json(results_crew_output.raw))
 
         sleep_time = min(60 * (i + 1) * (i + 1), 300)
         print(f"⏳ Sleeping for {sleep_time} seconds to avoid API rate limits...")

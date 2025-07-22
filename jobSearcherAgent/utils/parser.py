@@ -1,17 +1,10 @@
 import json
 import logging
 import re
-import os
-from dotenv import load_dotenv
-from pymongo import MongoClient
-from bson.objectid import ObjectId
-import certifi
-
 
 def parse_to_json(response):
-    logging.info("📄 Starting resume parsing")
+    logging.info("Started Parsing")
 
-    # 1. Extract text between triple backticks if present
     code_blocks = re.findall(r"```(?:json)?\s*(.*?)\s*```", response, re.DOTALL)
 
     if code_blocks:
@@ -25,27 +18,7 @@ def parse_to_json(response):
         return json.loads(content)
     except json.JSONDecodeError as e:
         logging.error(f"❌ Failed to parse JSON: {e}")
-        raise
-
-
-def load_data(job_data: dict):
-    try:
-        postings = job_data.get("job_postings", [])
-        if not postings:
-            logging.warning("⚠️ No job postings found to insert.")
-            return []
-
-        inserted_ids = []
-        for post in postings:
-            result = collection.insert_one(post)
-            inserted_ids.append(str(result.inserted_id))
-            logging.info(f"✅ Inserted job posting with _id: {result.inserted_id}")
-
-        return inserted_ids
-
-    except Exception as e:
-        logging.error(f"❌ Failed to insert job postings into MongoDB: {e}")
-        return []
+        return None
 
 
 if __name__ == "__main__":
@@ -245,4 +218,3 @@ if __name__ == "__main__":
 }
     """
     print(parse_to_json(text))
-

@@ -1,15 +1,13 @@
 from crewai import Task
-from jobSearcherAgent.agent.investigator_agent import investigator
+from agent.investigator_agent import investigator
 
 investigator_task = Task(
     description=(
-        """For each URL provided, visit the page and extract the job title, 
-            company name, location, and the full job description text."""
-    ),
-    expected_output=(
-        """A list of JSON objects, with each object containing the raw, 
-            unformatted data for one job listing"""
-    ),
-    context="This task will use output of JobScout_task as input",
+        f"Read and meticulously extract details from the job description the job details\n"
+        "Extract the following: job title, company, location, and the url from where you can apply for the job."
+        f"If a field is not explicitly found, leave it as an empty list or None as per the schema."
+        f"Get at max 30 job postings. Once you have hit that number, stop agnet execution."
+        ),
+    expected_output="A json type result of individual job postings found on the page.",
     agent=investigator
 )

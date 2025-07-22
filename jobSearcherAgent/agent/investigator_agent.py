@@ -1,21 +1,23 @@
+import sys
+import os
+sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 from model import llm
 from crewai import Agent
+from tool.parser_tool import WebScrapingTool
 from dotenv import load_dotenv
 
 load_dotenv()
 
+parser_tool = WebScrapingTool()
 
-
-investigator = Agent(
-    role="Lead Investigator & Data Extractor",
-    goal="To visit each provided URL, scrape its content, and extract the raw, unstructured job details like title, company name, location, and the full job description.",
-    backstory=(
-        """You are a meticulous investigator who can cut through the noise of website 
-            layouts, ads, and boilerplate text. You are equipped with tools to parse HTML 
-            and precisely pull out the specific pieces of information you've been tasked 
-            to find, no matter how deeply they are buried in the code"""
-    ),
-    verbose=True,
-    tools=[],
+investigator =  Agent(
+    role='Job Description Extractor',
+    goal='Accurately extract structured information from job description URLs.',
+    backstory="""You are a highly precise AI assistant specialized in parsing web pages
+                to extract specific data fields from job postings. Your output must always conform
+                to the specified JSON schema.""",
+    verbose=True, 
+    allow_delegation=False,
+    tools=[parser_tool],
     llm=llm
 )

@@ -1,0 +1,9 @@
+crewai
+langchain-openai
+tavily-python
+python-dotenv
+pydantic
+beautifulsoup4
+selenium
+webdriver-manager
+requests

@@ -1,0 +1,1 @@
+# Calculates cosine similarity between resume vector and job vectors

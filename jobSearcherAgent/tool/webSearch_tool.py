@@ -5,11 +5,9 @@ from pydantic import BaseModel, Field
 from typing import Type
 
 class TavilySearchToolInput(BaseModel):
-    """Input for the Tavily Web Search tool."""
     query: str = Field(..., description="The search query to find job postings on the web.")
 
 class TavilySearchTool(BaseTool):
-    """A tool that uses the Tavily Search API to find URLs for job postings."""
     name: str = "Tavily Job URL Search"
     description: str = (
         "A tool that uses the Tavily Search API to find and return a list of URLs "
@@ -19,7 +17,6 @@ class TavilySearchTool(BaseTool):
     args_schema: Type[BaseModel] = TavilySearchToolInput
 
     def _run(self, query: str) -> str:
-        """Use the tool to get a list of URLs."""
         try:
             api_key = os.getenv("TAVILY_API_KEY")
             if not api_key:

@@ -24,9 +24,3 @@ JobScout = Agent(
     allow_delegation=False,
     llm=llm
 )
-
-if __name__ == "__main__":
-    if search_tool:
-        print("OK")
-    else:
-        print("Cooked")

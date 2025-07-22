@@ -24,7 +24,7 @@ if __name__ == "__main__":
     time.sleep(60)
 
     for i, url in enumerate(job_urls):
-        print(f"Extracting Jobs from link{i+1}")
+        print(f"Extracting Jobs from link {i+1}")
         task_description = (
             f"Read and meticulously extract details from the job description at: {url}\n"
             "Extract the following: job title, company, location, and the url from where you can apply for the job."

@@ -14,7 +14,6 @@ llm = LLM(
 
 if __name__ == "__main__":
     try:
-        # Test the LLM connection
         print("Testing LLM configuration...")
         print(f"Model: {llm.model}")
         print("✅ LLM Configuration Successful")

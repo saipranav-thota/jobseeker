@@ -1,12 +1,11 @@
-from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
-from langchain_community.llms import HuggingFacePipeline
+import os
+from dotenv import load_dotenv
+from langchain_google_genai import ChatGoogleGenerativeAI
 
-model_name = "google/gemma-2b"
+load_dotenv()
 
-tokenizer = AutoTokenizer.from_pretrained(model_name)
-model = AutoModelForCausalLM.from_pretrained(model_name, device_map="auto", torch_dtype="auto")
-pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=512)
-llm = HuggingFacePipeline(pipeline=pipe)
-
-if __name__ == "__main__":
-    print(llm)
+llm = ChatGoogleGenerativeAI(
+    model="gemini-1.5-flash",
+    api_key=os.getenv("GEMINI_API_KEY"),
+    temperature=0.7
+)

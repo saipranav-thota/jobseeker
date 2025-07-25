@@ -3,9 +3,9 @@ import os
 import json
 import logging
 from dotenv import load_dotenv 
-from model import llm
+from ai_services.model import llm
 from langchain_core.prompts import PromptTemplate
-from extract_resume import extract_text_from_doc
+from ai_services.extract_resume import extract_text_from_doc
 
 # ✅ Setup logging
 logging.basicConfig(

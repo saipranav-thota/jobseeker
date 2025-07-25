@@ -3,9 +3,12 @@ from docx import Document
 from pypdf import PdfReader
 
 def extract_text_from_doc(doc_path):
-    doc = Document(doc_path)
-    text = "\n".join([para.text for para in doc.paragraphs])
-    return text
+    try:
+        doc = Document(doc_path)
+        text = "\n".join([para.text for para in doc.paragraphs])
+        return text
+    except:
+        return None
 
 def extract_text_from_pdf(doc_path):
     reader = PdfReader(doc_path)
@@ -18,5 +21,5 @@ def extract_text_from_pdf(doc_path):
 
 
 if __name__ == "__main__":
-    print(extract_text_from_doc("resume.docx"))
-    print(extract_text_from_pdf("resume.pdf"))
+    content = extract_text_from_doc("resume.pdf") or extract_text_from_pdf("resume.pdf") 
+    print(content)

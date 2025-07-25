@@ -2,14 +2,10 @@
 import os
 import logging
 import datetime
-from pypdf import PdfReader
 from bson import ObjectId
-
-
-from extract_resume import extract_text_from_doc, extract_text_from_pdf
-from resume_parser import parse_resume
-from mongo import load_data, update_data
-from embedder import get_vector_embeddings
+from ai_services.extract_resume import extract_text_from_doc, extract_text_from_pdf
+from ai_services.resume_parser import parse_resume
+from ai_services.mongo import load_data
 
 logging.basicConfig(level=logging.INFO)
 
@@ -20,7 +16,7 @@ def load_resume(path):
     size = os.path.getsize(path)
     now = datetime.datetime.utcnow()
 
-    resume_raw_text = extract_text_from_doc(path)
+    resume_raw_text = extract_text_from_doc(path) or extract_text_from_pdf(path)
     data = parse_resume(resume_raw_text)
     metadata = {
         "_id":ObjectId(),
@@ -41,8 +37,3 @@ def load_resume(path):
 
 if __name__ == "__main__":
     doc_id = load_resume("resume.docx")
-    embedding = get_vector_embeddings(doc_id)
-    update_data(
-        doc_id,
-        {"embedding": embedding.tolist()}
-    )

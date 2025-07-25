@@ -8,12 +8,12 @@ import certifi
 load_dotenv()
 
 # Read environment or fallback values
-MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017/")
-DB_NAME = os.getenv("DB_NAME", "user_data")
-COLLECTION_NAME = os.getenv("COLLECTION_NAME", "document")
+MONGO_URI = os.getenv("MONGO_URI")
+DB_NAME = os.getenv("DB_NAME")
+COLLECTION_NAME = os.getenv("COLLECTION_NAME")
 
 # Connect to MongoDB with SSL for Atlas
-client = MongoClient(MONGO_URI, tls=True, tlsCAFile=certifi.where())
+client = MongoClient(MONGO_URI)
 db = client[DB_NAME]
 collection = db[COLLECTION_NAME]
 

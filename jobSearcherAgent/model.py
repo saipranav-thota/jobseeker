@@ -3,14 +3,19 @@ from dotenv import load_dotenv
 from crewai import LLM
 load_dotenv()
 
-if not os.getenv("GEMINI_API_KEY"):
-    raise ValueError("GEMINI_API_KEY environment variable is not set")
+if not os.getenv("CEREBRAS_API_KEY"):
+    raise ValueError("CEREBRAS_API_KEY environment variable is not set")
 
 llm = LLM(
-    model="gemini/gemini-2.5-flash",
-    api_key=os.getenv("GEMINI_API_KEY"),
-    temperature=0.7
+    model="cerebras/gpt-oss-120b",
+    api_key=os.getenv("CEREBRAS_API_KEY"),
+    temperature=0.7,
 )
+# llm = LLM(
+#     model="gemini/gemini-2.0-flash-exp",
+#     api_key=os.getenv("GEMINI_API_KEY"),
+#     temperature=0.7
+# )
 
 if __name__ == "__main__":
     try:
